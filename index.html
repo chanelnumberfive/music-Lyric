@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+<title>run</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="screen-orientation" content="portrait">
+<meta name="x5-orientation" content="portrait">
+<meta name="format-detection" content="telephone=no,email=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="run">
+
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<!-- no cache -->
+<meta http-equiv="cache-control" content="max-age=0"/>
+<meta http-equiv="cache-control" content="no-cache"/>
+<meta http-equiv="expires" content="0"/>
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+<meta http-equiv="pragma" content="no-cache"/>
+<script type="application/javascript" src="js/fastclick.js?version=20170905"></script> 
+<script type="application/javascript">
+	function setFontSize(){
+        document.documentElement.style.fontSize=(window.innerWidth>750?750:window.innerWidth)/7.5+'px';
+    }
+    setFontSize();
+    window.addEventListener('resize',function(){
+        setFontSize();
+    });
+    window.addEventListener('load', function () {
+		FastClick.attach(document.body);
+	}, false);
+</script>
+<link rel="stylesheet" href="css/blz-reset.css?version=20170905">
+</head>
+
+<body ontouchstart="">
+<audio src="music/yihou.mp3" id="music" loop></audio>
+<article class="article glb-full-screen">
+	<div class="arti-progress-bar layout-tr-center">
+		<span class="apb-wrapper layout-td layout-tr-center"><span class="apb-bar"></span><span class="apb-text">1/10</span></span>
+	</div>
+	<h1 class="arti-title glb-for-screen">以后的以后</h1>
+	<div class="arti-main-wrapper glb-full-box">
+		<p class="arti-main">
+			<span>风决定要走 云怎么挽留</span>
+			<span>曾经抵死纠缠 放空的手</span>
+			<span>情<em class="arti-new-word" data-pronounce="yuán" data-url="music/yuan.mp3" data-blz-cartoon="#arti-nc-detail on">缘</em>似流水 覆水总难收</span>
+			<span>我还站在你离开 离开的路口</span>
+			<span>你既然无心 我也该放手</span>
+			<span>何必<em class="arti-new-word" data-pronounce="chī" data-url="music/chi.mp3" data-blz-cartoon="#arti-nc-detail on">痴</em>痴傻傻纠缠不休</span>
+			<span>是情深缘浅 留一生遗憾</span>
+			<span>还是情浅缘深 一辈子怨尤</span>
+			<span>没有我以后 一个人少喝点酒</span>
+			<span>窗台外的衣服有没有人来收</span>
+			<span>以后的以后 你是谁的某某某</span>
+			<span>若是再见 只会让人更难受</span>
+			<span>没有你以后 一个人四处旅游</span>
+			<span>在某时某地交上三两个朋友</span>
+			<span>以后的以后 我牵着别人衣袖</span>
+			<span>若是有缘再见 也要学会笑着问候</span>
+			<span>你既然无心 我也该放手</span>
+			<span>何必痴痴傻傻纠缠不休</span>
+			<span>是情深缘浅 留一生遗憾</span>
+			<span>还是情浅缘深 一辈子怨偶</span>
+			<span>没有我以后 一个人少喝点酒</span>
+			<span>窗台外的衣服有没有人来收</span>
+			<span>以后的以后 你是谁的某某某</span>
+			<span>若是再见 只会让人更难受</span>
+			<span>没有你以后 一个人四处旅游</span>
+			<span>在某时某地交上三两个朋友</span>
+			<span>以后的以后 我牵着别人衣袖</span>
+			<span>若是有缘再见 也要学会笑着问候</span>
+			<span>若是有缘再见 也要学会笑着问候</span>
+	    </p>
+	</div>
+	<div class="arti-nc-detail" id="arti-nc-detail" data-blz-cartoon="#arti-nc-detail on">
+		<span class="icon-close" data-blz-cartoon="#arti-nc-detail off"></span>
+		<dl>
+			<dt class="arti-nc-dt">缘</dt>
+			<dd class="arti-nc-d1">读音: [gǒu]</dd>
+			<dd class="arti-nc-d2">
+				<button class="arti-nc-voice layout-tr">朗读<span class="icon-voice"></span></button>
+			</dd>
+		</dl>
+	</div>	
+</article>
+<script type="application/javascript" src="js/jquery-3.2.1.min.js?version=20170905"></script>
+<script type="application/javascript" src="js/blz-music.js?version=20170905"></script>
+<script type="application/javascript" src="js/blz-cartoon.js?version=20170905"></script>
+<script type="application/javascript">
++function($){
+	'use strict';
+	
+	// 文章加载
+	function loadArticle(url){
+		const promise=new Promise(function(res,rej){
+			$.ajax({
+				url:url,
+				type:'GET',
+				success:function(data){
+					res(data);
+				},
+				complete:function(xhr,state){
+					if(state!=='success'){
+						rej(state);
+					}
+				}
+			});
+		});
+		return promise;
+	}
+	
+	// 文章解析
+	function analysisArticle(lyric){
+		let lines = lyric.split('\n'),
+	        pattern = /\[\d{2}:\d{2}.\d{2}\]/g,
+	        result = [];
+	    while (!pattern.test(lines[0])) {
+	        lines = lines.slice(1);
+	    };
+	    lines[lines.length - 1].length === 0 && lines.pop();
+	    lines.forEach(function(data, step){
+	        let index = data.indexOf(']');
+	        let time = data.substring(0, index+1),
+	        	value = data.substring(index+1);
+        	let timeString = time.substring(1, time.length-2);
+        	let timeArr = timeString.split(':');
+        	result.push([parseInt(timeArr[0], 10) * 60 + parseFloat(timeArr[1]), value]);
+
+	    });
+	    result.sort(function(a, b) {
+	        return a[0] - b[0];
+	    });
+		
+		return result;
+	}
+	
+	const artiNCdt=document.querySelector('.arti-nc-dt'),
+		  artiNCd1=document.querySelector('.arti-nc-d1'),
+		  music=document.querySelector('#music'),
+		  artiMain=document.querySelector('.arti-main'),
+		  apbBar=document.querySelector('.apb-bar'),
+		  apbText=document.querySelector('.apb-text'),
+		  $paras=$(artiMain.querySelectorAll('span'));
+	let music2=new Audio();
+	$(document).blzCartoon({
+		cartoonClass:'active'
+	});
+	
+	$('#arti-nc-detail').on('animation',function(e){
+		const data=$(this).data('blz-cartoon-switcher');
+		if($(data[0]).is('.arti-new-word')){
+			artiNCdt.textContent=data[0].textContent;
+			artiNCd1.textContent='读音: ['+data[0].dataset.pronounce+']';
+			music2.src=data[0].dataset.url;
+			console.log(data[0].dataset.url);
+		}
+	});
+	
+	$('.arti-nc-voice').on('click',function(){
+		music2.play();
+		music.pause();
+	});
+	music2.onended=function(){
+		music.play();
+	}
+	
+	// load the article
+	const promise=loadArticle('lrc/yihou.lrc');
+	promise.then(function(data){
+		const times=analysisArticle(data);
+		let count=0,
+			l=times.length;
+		music.play();
+		music.addEventListener('timeupdate',function(){
+			apbBar.style.width=90*this.currentTime/this.duration+10+'%';
+			for(;count<l;count++){
+				if(this.currentTime>=times[count][0]){
+					apbText.textContent=count+'/'+times.length;
+					$paras.removeClass('active').eq(count).addClass('active')[0].scrollIntoViewIfNeeded();
+				}else{
+					return;
+				}
+			}
+		});
+	}).catch(function(err){
+		console.log(err);
+	});
+	//$.ajax({
+//		url:'http://demo.roseone.net/lang-edu/app/lang-edu/v1.0/load-article-catalog',
+//		type:'get',
+//		dataType:'json',
+//		success:function(data){
+//			console.log(data);
+//		},
+//		complete:function(xhr,state){
+//			if(state!=='success'){
+//				alert(state);
+//			}
+//		}   
+//	});
+	document.addEventListener('click',function(){
+		music.play();
+	});
+	if(navigator.userAgent.indexOf('iPhone')!==-1){
+		alert('please click the screen to play the music');
+	}
+}(window.jQuery);	
+</script>
+</body>
+</html>
