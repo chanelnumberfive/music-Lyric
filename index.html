@@ -41,7 +41,7 @@
 <body ontouchstart="">
 <audio src="music/yihou.mp3" id="music" loop></audio>
 <article class="article glb-full-screen">
-	<div class="arti-progress-bar layout-tr-center">
+	<div class="arti-progress-bar layout-tr-center" style="opacity: 0;">
 		<span class="apb-wrapper layout-td layout-tr-center"><span class="apb-bar"></span><span class="apb-text">1/10</span></span>
 	</div>
 	<h1 class="arti-title glb-for-screen">以后的以后</h1>
@@ -49,10 +49,10 @@
 		<p class="arti-main">
 			<span>风决定要走 云怎么挽留</span>
 			<span>曾经抵死纠缠 放空的手</span>
-			<span>情<em class="arti-new-word" data-pronounce="yuán" data-url="music/yuan.mp3" data-blz-cartoon="#arti-nc-detail on">缘</em>似流水 覆水总难收</span>
+			<span>情缘似流水 覆水总难收</span>
 			<span>我还站在你离开 离开的路口</span>
 			<span>你既然无心 我也该放手</span>
-			<span>何必<em class="arti-new-word" data-pronounce="chī" data-url="music/chi.mp3" data-blz-cartoon="#arti-nc-detail on">痴</em>痴傻傻纠缠不休</span>
+			<span>何必痴痴傻傻纠缠不休</span>
 			<span>是情深缘浅 留一生遗憾</span>
 			<span>还是情浅缘深 一辈子怨尤</span>
 			<span>没有我以后 一个人少喝点酒</span>
@@ -77,21 +77,11 @@
 			<span>若是有缘再见 也要学会笑着问候</span>
 			<span>若是有缘再见 也要学会笑着问候</span>
 	    </p>
-	</div>
-	<div class="arti-nc-detail" id="arti-nc-detail" data-blz-cartoon="#arti-nc-detail on">
-		<span class="icon-close" data-blz-cartoon="#arti-nc-detail off"></span>
-		<dl>
-			<dt class="arti-nc-dt">缘</dt>
-			<dd class="arti-nc-d1">读音: [gǒu]</dd>
-			<dd class="arti-nc-d2">
-				<button class="arti-nc-voice layout-tr">朗读<span class="icon-voice"></span></button>
-			</dd>
-		</dl>
 	</div>	
 </article>
 <script type="application/javascript" src="js/jquery-3.2.1.min.js?version=20170905"></script>
-<script type="application/javascript" src="js/blz-music.js?version=20170905"></script>
-<script type="application/javascript" src="js/blz-cartoon.js?version=20170905"></script>
+<script type="application/javascript" src="js/blz.js"></script>
+<script type="application/javascript" src="js/blz-scrollto.js"></script>
 <script type="application/javascript">
 +function($){
 	'use strict';
@@ -140,35 +130,9 @@
 		return result;
 	}
 	
-	const artiNCdt=document.querySelector('.arti-nc-dt'),
-		  artiNCd1=document.querySelector('.arti-nc-d1'),
-		  music=document.querySelector('#music'),
-		  artiMain=document.querySelector('.arti-main'),
-		  apbBar=document.querySelector('.apb-bar'),
-		  apbText=document.querySelector('.apb-text'),
-		  $paras=$(artiMain.querySelectorAll('span'));
-	let music2=new Audio();
-	$(document).blzCartoon({
-		cartoonClass:'active'
-	});
-	
-	$('#arti-nc-detail').on('animation',function(e){
-		const data=$(this).data('blz-cartoon-switcher');
-		if($(data[0]).is('.arti-new-word')){
-			artiNCdt.textContent=data[0].textContent;
-			artiNCd1.textContent='读音: ['+data[0].dataset.pronounce+']';
-			music2.src=data[0].dataset.url;
-			console.log(data[0].dataset.url);
-		}
-	});
-	
-	$('.arti-nc-voice').on('click',function(){
-		music2.play();
-		music.pause();
-	});
-	music2.onended=function(){
-		music.play();
-	}
+	const music=document.querySelector('#music'),
+		  $artiMain=$('.arti-main'),
+		  $paras=$('.arti-main span');
 	
 	// load the article
 	const promise=loadArticle('lrc/yihou.lrc');
@@ -178,11 +142,19 @@
 			l=times.length;
 		music.play();
 		music.addEventListener('timeupdate',function(){
-			apbBar.style.width=90*this.currentTime/this.duration+10+'%';
 			for(;count<l;count++){
 				if(this.currentTime>=times[count][0]){
-					apbText.textContent=count+'/'+times.length;
-					$paras.removeClass('active').eq(count).addClass('active')[0].scrollIntoViewIfNeeded();
+					const $elem=$paras.eq(count),
+						  position=$elem[0].getBoundingClientRect(),
+						  h=window.innerHeight/2;
+					$paras.removeClass('current');
+					$elem.addClass('current');
+					if(h<position.top||h>position.bottom){
+						$artiMain.blzScrollto({
+							displacement:(position.top+position.bottom)/2-h,
+							time:300
+						});	
+					}
 				}else{
 					return;
 				}
@@ -191,24 +163,13 @@
 	}).catch(function(err){
 		console.log(err);
 	});
-	//$.ajax({
-//		url:'http://demo.roseone.net/lang-edu/app/lang-edu/v1.0/load-article-catalog',
-//		type:'get',
-//		dataType:'json',
-//		success:function(data){
-//			console.log(data);
-//		},
-//		complete:function(xhr,state){
-//			if(state!=='success'){
-//				alert(state);
-//			}
-//		}   
-//	});
 	document.addEventListener('click',function(){
 		music.play();
 	});
-	if(navigator.userAgent.indexOf('iPhone')!==-1){
-		alert('please click the screen to play the music');
+	window.onload=function(){
+		if(navigator.userAgent.indexOf('iPhone')!==-1){
+			alert('please click the screen to play the music');
+		}	
 	}
 }(window.jQuery);	
 </script>

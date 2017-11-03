@@ -653,6 +653,9 @@ div,  p,  a {
 .arti-main span {
 	display: block;
 }
+.arti-main span.current{
+	color:rgba(255,255,255,1);
+}
 .arti-progress-bar {
 	position: absolute;
 	left: 0;
@@ -690,12 +693,25 @@ div,  p,  a {
 .arti-main-wrapper {
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;
-	color:#fff;
+	color:rgba(255,255,255,0.8);
 	background-color:rgba(0,0,0,0.3);
 }
 .arti-main {
-	padding-top: 60px;
-	padding-bottom: 30px;
+	position:relative;
+	top:25%;
+	height:50%;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	-webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+	mask-image: linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+}
+.arti-main::after,
+.arti-main::before{
+	content:'';
+	display:block;
+	height:50%;
+	width:100%;
+	pointer-events:none;
 }
 .arti-new-word {
 	color: #e41d1d;
