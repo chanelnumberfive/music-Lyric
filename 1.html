@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<meta charset="UTF-8">
+<title></title>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" ></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+	<audio src="audio/ding.mp3" id="audio"></audio>
+	<button>按钮</button>
+	<script type="text/javascript">
+		;(function(){
+			'use strict';
+			alert('start to play music!');
+			
+			var audio=document.getElementById('audio');
+			
+			audio.addEventListener('pause',function(){
+				setTimeout(function(){
+					audio.play();
+				},1000);
+			});
+			document.addEventListener('click',play);
+			
+			function play(){
+				audio.play();
+				document.removeEventListener('click',play);
+			}	
+		})();
+	</script>
+</body>
+</html>
